@@ -1,0 +1,16 @@
+SET serveroutput ON;
+DECLARE
+  my_email employees.email%TYPE;
+BEGIN
+  -- RAISE TOO_MANY_ROWS;
+  SELECT email
+  INTO my_email
+  FROM EMPLOYEES
+  WHERE last_name='Taylor';
+ 
+  DBMS_OUTPUT.PUT_LINE('I am unreachable');
+EXCEPTION
+WHEN OTHERS THEN
+  DBMS_OUTPUT.PUT_LINE('SQLERRM = ' || SQLERRM);
+  DBMS_OUTPUT.PUT_LINE('SQLCODE = ' || TO_CHAR(SQLCODE));
+END;
