@@ -1,7 +1,11 @@
-CREATE TABLE jobs_history
-  (
-    job_id    VARCHAR2(10 BYTE),
-    job_title  VARCHAR2(35 BYTE),
-    min_salary NUMBER(6,0),
-    max_salary    NUMBER(6,0)
-  ); 
+CREATE OR REPLACE TRIGGER JOBS_HISTORY_TRIGGER BEFORE
+  UPDATE OF MIN_SALARY ON JOBS FOR EACH ROW BEGIN
+  INSERT
+  INTO jobs_history VALUES
+    (
+      :old.job_id,
+      :old.job_title,
+      :old.min_salary,
+      :old.max_salary
+    );
+END; 
